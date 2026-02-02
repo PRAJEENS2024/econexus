@@ -3,26 +3,22 @@ const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
 
-// Import Routes
 const authRouter = require('./routes/authRoutes');
+const resourceRouter = require('./routes/resourceRoutes'); // <--- ADDED
 
 const app = express();
 
-// 1) Global Middleware
 app.use(helmet());
 app.use(cors());
 app.use(express.json());
 app.use(morgan('dev'));
 
-// 2) Routes
+// Routes
 app.use('/api/v1/auth', authRouter);
+app.use('/api/v1/resources', resourceRouter); // <--- ADDED
 
-// 3) Test Route (Optional)
 app.get('/', (req, res) => {
-  res.status(200).json({
-    status: 'success',
-    message: 'ECONEXUS API is live and running!'
-  });
+  res.status(200).json({ status: 'success', message: 'ECONEXUS API is live!' });
 });
 
 module.exports = app;
