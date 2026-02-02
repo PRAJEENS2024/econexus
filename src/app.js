@@ -3,15 +3,21 @@ const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
 
+// Import Routes
+const authRouter = require('./routes/authRoutes');
+
 const app = express();
 
 // 1) Global Middleware
-app.use(helmet());      // Set security HTTP headers
-app.use(cors());        // Implement CORS
-app.use(express.json()); // Body parser, reading data from body into req.body
-app.use(morgan('dev'));  // Development logging
+app.use(helmet());
+app.use(cors());
+app.use(express.json());
+app.use(morgan('dev'));
 
-// 2) Test Route (We will delete this later)
+// 2) Routes
+app.use('/api/v1/auth', authRouter);
+
+// 3) Test Route (Optional)
 app.get('/', (req, res) => {
   res.status(200).json({
     status: 'success',
